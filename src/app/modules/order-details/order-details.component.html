@@ -1,0 +1,30 @@
+<div class="cart-container">
+  <h1 *ngIf="orderItems.length">Shopping Cart</h1>
+  <h2 *ngIf="orderItems.length === 0">Shopping cart is empty</h2>
+
+  <div *ngFor="let item of orderItems" class="product-details">
+    <mat-card>
+      <mat-card-content class="product-info">
+        <div class="product-image">
+          <img [src]="item.featuredAsset?.source" alt="{{ item.name }}" />
+        </div>
+        <div class="product-description">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <app-button
+          [color]="'warn'"
+          (btnClick)="removeFromOrder(item.id)"
+          [value]="'Remove'"
+          [type]="'raised'"
+        ></app-button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading product details...</p>
+</ng-template>

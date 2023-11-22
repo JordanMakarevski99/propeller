@@ -1,0 +1,71 @@
+<mat-paginator
+  #paginator
+  class="demo-paginator"
+  (page)="handlePageChange($event)"
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [hidePageSize]="hidePageSize"
+  [pageIndex]="pageIndex"
+  aria-label="Select page"
+>
+</mat-paginator>
+<div class="filter-and-sort">
+  <div class="sorting-container">
+    <mat-form-field>
+      <mat-label>Sort by Name</mat-label>
+      <mat-select
+        [(value)]="sortDirection"
+        (selectionChange)="sortByName(sortDirection)"
+      >
+        <mat-option value="ASC">Ascending</mat-option>
+        <mat-option value="DESC">Descending</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="sorting-container">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Search by Name"
+        [(ngModel)]="searchTerm"
+        (input)="applySearch()"
+      />
+    </mat-form-field>
+  </div>
+</div>
+<div class="product-container">
+  <mat-card
+    *ngFor="let product of (products$ | async)?.items"
+    class="product-card"
+    (click)="navigateToProductDetails(product.id)"
+    (mouseenter)="setHoveredProduct(product.id)"
+    (mouseleave)="setHoveredProduct(null)"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      mat-card-image
+      [src]="product.featuredAsset?.source"
+      alt="{{ product.name }}"
+    />
+    <mat-divider></mat-divider>
+    <div class="view-details" *ngIf="isHovered(product)">
+      <a (click)="navigateToProductDetails(product.id)">View Details</a>
+    </div>
+  </mat-card>
+</div>
+<mat-paginator
+  #paginator
+  class="demo-paginator"
+  (page)="handlePageChange($event)"
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [hidePageSize]="hidePageSize"
+  [pageIndex]="pageIndex"
+  aria-label="Select page"
+>
+</mat-paginator>
+<ng-template #loading>Loading...</ng-template>

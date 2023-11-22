@@ -1,0 +1,38 @@
+<div class="product-details">
+  <div *ngIf="product$ | async as product; else loading">
+    <h2>{{ product.name }}</h2>
+    <mat-card>
+      <mat-card-content class="product-info">
+        <div class="product-image">
+          <img [src]="product.featuredAsset?.source" alt="{{ product.name }}" />
+        </div>
+        <div class="product-description">
+          <p>Description: {{ product.description }}</p>
+          <app-button
+            [color]="'primary'"
+            [value]="'Add to Cart'"
+            [type]="'raised'"
+            (btnClick)="addToCart(product)"
+          ></app-button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="button-container">
+        <app-button
+          [value]="'Back to shop'"
+          [type]="'raised'"
+          [color]="'accent'"
+          (btnClick)="navigateToShop()"
+        ></app-button>
+        <app-button
+          [value]="'Shopping Cart'"
+          [type]="'raised'"
+          [color]="'warn'"
+          (btnClick)="navigateToShoppingCart()"
+        ></app-button
+      ></mat-card-actions>
+    </mat-card>
+  </div>
+  <ng-template #loading>
+    <p>Loading product details...</p>
+  </ng-template>
+</div>
